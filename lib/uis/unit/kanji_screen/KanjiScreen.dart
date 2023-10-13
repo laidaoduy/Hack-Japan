@@ -35,48 +35,64 @@ class _KanjiScreenState extends State<KanjiScreen> {
       appBar: AppBar(elevation: 10, centerTitle: true, title: Text("Kanji")),
       body: Column(
         children: [
-          Container(
-            margin: EdgeInsets.only(left: 4, top: 6, right: 4),
-            alignment: Alignment.center,
-            child: TextField(
-              decoration: InputDecoration(
-                prefixIcon: InkWell(
-                  onTap: () {},
-                  child: Container(child: Icon(Icons.search)),
-                ),
-                isCollapsed: true,
-                contentPadding: EdgeInsets.symmetric(vertical: 10),
-                border: OutlineInputBorder(borderSide: BorderSide()),
-              ),
-              onSubmitted: (text) {
-                _kanjiList.value = _viewModel.searchKanjiList(text);
-              },
-              onChanged: (text) {
-                _kanjiList.value = _viewModel.searchKanjiList(text);
-              },
-            ),
-          ),
-          Flexible(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.only(bottom: 16),
-              child: ValueListenableBuilder<List<KanjiModel>>(
-                  valueListenable: _kanjiList,
-                  builder: (_, value, __) {
-                    if (value.isEmpty) {
-                      return ResultSearchEmptyWidget();
-                    }
-                    return Column(
-                      children: value.map((e) {
-                        return KanjiItemWidget(kanjiModel: e);
-                      }).toList(),
-                    );
-                  }),
-            ),
-          ),
+          SearchWidget(),
+          ListWidget(),
         ],
       ),
+      floatingActionButton: AddButton(),
     );
   }
 }
 
-extension _KanjiScreenStateX on _KanjiScreenState {}
+extension _KanjiScreenStateX on _KanjiScreenState {
+  Widget SearchWidget() {
+    return Container(
+      margin: EdgeInsets.only(left: 4, top: 6, right: 4),
+      alignment: Alignment.center,
+      child: TextField(
+        decoration: InputDecoration(
+          prefixIcon: InkWell(
+            onTap: () {},
+            child: Container(child: Icon(Icons.search)),
+          ),
+          isCollapsed: true,
+          contentPadding: EdgeInsets.symmetric(vertical: 10),
+          border: OutlineInputBorder(borderSide: BorderSide()),
+        ),
+        onSubmitted: (text) {
+          _kanjiList.value = _viewModel.searchKanjiList(text);
+        },
+        onChanged: (text) {
+          _kanjiList.value = _viewModel.searchKanjiList(text);
+        },
+      ),
+    );
+  }
+
+  Widget ListWidget() {
+    return Flexible(
+      child: SingleChildScrollView(
+        padding: EdgeInsets.only(bottom: 16),
+        child: ValueListenableBuilder<List<KanjiModel>>(
+            valueListenable: _kanjiList,
+            builder: (_, value, __) {
+              if (value.isEmpty) {
+                return ResultSearchEmptyWidget();
+              }
+              return Column(
+                children: value.map((e) {
+                  return KanjiItemWidget(kanjiModel: e);
+                }).toList(),
+              );
+            }),
+      ),
+    );
+  }
+
+  FloatingActionButton AddButton() {
+    return FloatingActionButton(
+      child: Icon(Icons.add, size: 40, color: Colors.blue),
+      onPressed: () {},
+    );
+  }
+}

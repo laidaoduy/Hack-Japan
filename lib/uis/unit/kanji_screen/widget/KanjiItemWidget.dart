@@ -13,13 +13,13 @@ class KanjiItemWidget extends StatelessWidget {
       padding: EdgeInsets.only(left: 8),
       margin: EdgeInsets.only(left: 16, right: 16, top: 16),
       decoration: BoxDecoration(
-        border: Border.all(),
+        border: Border.all(color: Colors.grey.withOpacity(0.8)),
         borderRadius: BorderRadius.all(Radius.circular(6)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(kanjiModel.kanji, style: TextStyle(fontSize: 70)),
+          Text(kanjiModel.kanji, style: TextStyle(fontSize: 70, color: Colors.black.withOpacity(0.6))),
           Container(
             margin: EdgeInsets.only(left: 12, right: 8, top: 4, bottom: 4),
             child: Column(
